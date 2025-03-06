@@ -1,5 +1,5 @@
 {{- define "brevesapi.name" -}}
-{{- default "user-api" .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
+{{- default "breves-api" .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 {{/* Helm required labels */}}
