@@ -21,13 +21,13 @@ const (
 func main() {
 	var ok bool
 	var err error
-	sw.PkiVaultServiceHost, ok = os.LookupEnv("PKI_VAULT_SERVICE_HOST")
+	sw.BrevesVaultServiceHost, ok = os.LookupEnv("BREVES_VAULT_SERVICE_HOST")
 	if !ok {
-		log.Fatal("Error: could not read $PKI_VAULT_SERVICE_HOST")
+		log.Fatal("Error: could not read $BREVES_VAULT_SERVICE_HOST")
 	}
-	sw.PkiVaultServicePort, ok = os.LookupEnv("PKI_VAULT_SERVICE_PORT")
+	sw.BrevesVaultServicePort, ok = os.LookupEnv("BREVES_VAULT_SERVICE_PORT")
 	if !ok {
-		log.Fatal("Error: could not read $PKI_VAULT_SERVICE_PORT")
+		log.Fatal("Error: could not read $BREVES_VAULT_SERVICE_PORT")
 	}
 
 	sw.JwtSecretKey, ok = os.LookupEnv("JWT_SECRET_KEY")
