@@ -1,0 +1,203 @@
+---
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: "Breves API"
+basePath: "/api"
+tags:
+- name: "Exercise"
+  description: "Endpoints for Zolara's exercises"
+paths:
+  /video:
+    get:
+      tags:
+      - "Exercise"
+      summary: "Get videos that fits the user's profile"
+      operationId: "getUserVideos"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        "200":
+          description: "Successful retrieval of videos"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/UserVideoList"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+      security:
+      - USER: []
+    put:
+      tags:
+      - "Exercise"
+      summary: "Like a video"
+      operationId: "likeVideos"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Video object"
+        required: true
+        schema:
+          $ref: "#/definitions/VideoLikeRequest"
+        x-exportParamName: "Body"
+      responses:
+        "200":
+          description: "Successful like of video"
+          schema:
+            $ref: "#/definitions/UserCreatedResponse"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+      security:
+      - USER: []
+  /video/{videoId}:
+    put:
+      tags:
+      - "Exercise"
+      summary: "Update user's video status when they didn't understand the video"
+      operationId: "updateUserVideo"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "videoId"
+          in: "path"
+          description: "video identifier"
+          required: true
+          type: "integer"
+          format: "int64"
+          x-exportParamName: "VideoId"
+      responses:
+        "200":
+          description: "Video status updated"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/UserVideoList"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: "Forbidden"
+        "404":
+          description: "Not Found"
+      security:
+      - USER: []
+securityDefinitions:
+  USER:
+    type: "apiKey"
+    name: "X-Csrf-Token"
+    in: "header"
+  ADMIN:
+    type: "apiKey"
+    name: "X-Csrf-Token"
+    in: "header"
+definitions:
+  UserCreatedResponse:
+    type: "object"
+    required:
+    - "message"
+    properties:
+      message:
+        type: "string"
+      createdId:
+        type: "integer"
+        format: "int64"
+    example:
+      createdId: 0
+      message: "message"
+  VideoLikeRequest:
+    type: "object"
+    properties:
+      videos:
+        type: "array"
+        items:
+          type: "string"
+          example: "/video/0"
+  UserVideoInList:
+    type: "object"
+    required:
+    - "action"
+    - "language"
+    - "level"
+    - "likes"
+    - "subtitle"
+    - "title"
+    - "videoId"
+    - "videoUrl"
+    properties:
+      title:
+        type: "string"
+      subtitle:
+        type: "string"
+      likes:
+        type: "integer"
+        format: "int64"
+      language:
+        type: "string"
+      level:
+        type: "string"
+      action:
+        type: "string"
+      videoUrl:
+        type: "string"
+      videoId:
+        type: "string"
+    example:
+      videoUrl: "videoUrl"
+      level: "level"
+      subtitle: "subtitle"
+      action: "action"
+      language: "language"
+      videoId: "videoId"
+      title: "title"
+      likes: 0
+  UserVideoList:
+    type: "object"
+    required:
+    - "total"
+    properties:
+      userVideos:
+        type: "array"
+        items:
+          $ref: "#/definitions/UserVideoInList"
+      total:
+        type: "integer"
+        format: "int64"
+    example:
+      userVideos:
+      - videoUrl: "videoUrl"
+        level: "level"
+        subtitle: "subtitle"
+        action: "action"
+        language: "language"
+        videoId: "videoId"
+        title: "title"
+        likes: 0
+      - videoUrl: "videoUrl"
+        level: "level"
+        subtitle: "subtitle"
+        action: "action"
+        language: "language"
+        videoId: "videoId"
+        title: "title"
+        likes: 0
+      total: 6
+  Response:
+    type: "object"
+    required:
+    - "message"
+    - "token"
+    properties:
+      token:
+        type: "string"
+      message:
+        type: "string"

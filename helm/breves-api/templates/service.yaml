@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: "{{ include "brevesapi.name" . }}"
+  labels:
+{{ include "brevesapi.labels" . | indent 4 }}
+spec:
+  ports:
+    - port: {{ .Values.port }}
+      targetPort: {{ .Values.service.port }}
+  selector:
+{{ include "brevesapi.matchLabels" . | indent 4 }}

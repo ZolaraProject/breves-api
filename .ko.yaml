@@ -1,0 +1,7 @@
+builds:
+- id: breves-api
+  dir: ./
+  outputImage: nexuszolara.me/zolara-microservice/breves-api
+  ldflags:
+  - -s -w
+  

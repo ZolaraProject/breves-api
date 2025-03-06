@@ -1,0 +1,178 @@
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: "Breves API"
+
+basePath: "/api"
+tags:
+  - name: "Exercise"
+    description: "Endpoints for Zolara's exercises"
+
+paths:
+  /video:
+    get:
+      tags:
+        - "Exercise"
+      summary: "Get videos that fits the user's profile"
+      produces:
+        - "application/json"
+      operationId: "getUserVideos"
+      security:
+        - USER: []
+      responses:
+        200:
+          description: "Successful retrieval of videos"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/UserVideoList"
+        401:
+          description: "Unauthorized"
+        403:
+          description: "Forbidden"
+        404:
+          description: "Not Found"
+    put:
+      tags:
+        - "Exercise"
+      summary: "Like a video"
+      produces:
+        - "application/json"
+      operationId: "likeVideos"
+      security:
+        - USER: []
+      parameters:
+        - name: "body"
+          in: "body"
+          description: "Video object"
+          required: true
+          schema:
+            $ref: "#/definitions/VideoLikeRequest"
+      responses:
+        200:
+          description: "Successful like of video"
+          schema:
+            $ref: "#/definitions/UserCreatedResponse"
+        401:
+          description: "Unauthorized"
+        403:
+          description: "Forbidden"
+        404:
+          description: "Not Found"
+
+  /video/{videoId}:
+    put:
+      tags:
+        - "Exercise"
+      summary: "Update user's video status when they didn't understand the video"
+      produces:
+        - "application/json"
+      operationId: "updateUserVideo"
+      security:
+        - USER: []
+      parameters:
+        - name: "videoId"
+          in: "path"
+          description: "video identifier"
+          required: true
+          type: "integer"
+          format: "int64"
+      responses:
+        200:
+          description: "Video status updated"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/UserVideoList"
+        401:
+          description: "Unauthorized"
+        403:
+          description: "Forbidden"
+        404:
+          description: "Not Found"
+
+securityDefinitions:
+  USER:
+    type: apiKey
+    in: header
+    name: X-Csrf-Token
+  ADMIN:
+    type: apiKey
+    in: header
+    name: X-Csrf-Token
+
+definitions:
+  UserCreatedResponse:
+    type: "object"
+    properties:
+      message:
+        type: "string"
+      createdId:
+        type: "integer"
+        format: "int64"
+    required:
+      - message
+
+  VideoLikeRequest:
+    type: "object"
+    properties:
+      videos:
+        type: "array"
+        items:
+          type: "string"
+          example: "/video/0"
+
+  UserVideoInList:
+    type: "object"
+    properties:
+      title:
+        type: "string"
+      subtitle:
+        type: "string"
+      likes:
+        type: "integer"
+        format: "int64"
+      language:
+        type: "string"
+      level:
+        type: "string"
+      action:
+        type: "string"
+      videoUrl:
+        type: "string"
+      videoId:
+        type: "string"
+    required:
+      - title
+      - subtitle
+      - likes
+      - language
+      - level
+      - action
+      - videoUrl
+      - videoId
+
+  UserVideoList:
+    type: "object"
+    properties:
+      userVideos:
+        type: "array"
+        items:
+          $ref: "#/definitions/UserVideoInList"
+      total:
+        type: "integer"
+        format: "int64"
+    required:
+      - videos
+      - total
+
+  Response:
+    type: "object"
+    properties:
+      token:
+        type: "string"
+      message:
+        type: "string"
+    required:
+      - token
+      - message
