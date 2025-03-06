@@ -9,13 +9,13 @@ import (
 )
 
 var (
-	PkiVaultServiceHost string
-	PkiVaultServicePort string
-	JwtSecretKey        string
-	RedisHost           string
-	RedisPort           string
-	RedisPassword       string
-	RedisPool           *radix.Pool
+	BrevesVaultServiceHost string
+	BrevesVaultServicePort string
+	JwtSecretKey           string
+	RedisHost              string
+	RedisPort              string
+	RedisPassword          string
+	RedisPool              *radix.Pool
 )
 
 func writeStandardResponse(r *http.Request, w http.ResponseWriter, grpcToken string, message string) {

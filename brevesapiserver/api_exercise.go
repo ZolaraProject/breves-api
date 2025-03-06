@@ -53,7 +53,7 @@ func GetUserVideos(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Create gRPC client
-	conn, err := grpc.Dial(fmt.Sprintf("%v:%v", PkiVaultServiceHost, PkiVaultServicePort), grpc.WithInsecure(), grpc.WithBlock())
+	conn, err := grpc.Dial(fmt.Sprintf("%v:%v", BrevesVaultServiceHost, BrevesVaultServicePort), grpc.WithInsecure(), grpc.WithBlock())
 	if err != nil {
 		logger.Err(grpcToken, "RegisterUser could not establish gRPC connection: %v", err)
 		w.WriteHeader(http.StatusInternalServerError)
@@ -158,7 +158,7 @@ func LikeVideos(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Create gRPC client
-	conn, err := grpc.Dial(fmt.Sprintf("%v:%v", PkiVaultServiceHost, PkiVaultServicePort), grpc.WithInsecure(), grpc.WithBlock())
+	conn, err := grpc.Dial(fmt.Sprintf("%v:%v", BrevesVaultServiceHost, BrevesVaultServicePort), grpc.WithInsecure(), grpc.WithBlock())
 	if err != nil {
 		logger.Err(grpcToken, "RegisterUser could not establish gRPC connection: %v", err)
 		w.WriteHeader(http.StatusInternalServerError)
@@ -248,7 +248,7 @@ func UpdateUserVideo(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Create gRPC client
-	conn, err := grpc.Dial(fmt.Sprintf("%v:%v", PkiVaultServiceHost, PkiVaultServicePort), grpc.WithInsecure(), grpc.WithBlock())
+	conn, err := grpc.Dial(fmt.Sprintf("%v:%v", BrevesVaultServiceHost, BrevesVaultServicePort), grpc.WithInsecure(), grpc.WithBlock())
 	if err != nil {
 		logger.Err(grpcToken, "RegisterUser could not establish gRPC connection: %v", err)
 		w.WriteHeader(http.StatusInternalServerError)
